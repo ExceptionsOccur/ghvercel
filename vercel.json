@@ -1,21 +1,42 @@
 {
     "functions": {
-        "api/proxy.js": {
-            "maxDuration": 10
+        "api/github-proxy.js": {
+            "runtime": "nodejs20.x",
+            "maxDuration": 30
+        },
+        "api/git-proxy.js": {
+            "runtime": "nodejs20.x",
+            "maxDuration": 30
         }
     },
     "rewrites": [
         {
             "source": "/",
-            "destination": "/index.html"
+            "destination": "/api/github-proxy.js"
         },
         {
-            "source": "/api/:path*",
-            "destination": "/api/proxy.js"
+            "source": "/raw/:path*",
+            "destination": "/api/github-proxy.js"
         },
         {
-            "source": "/(.*)",
-            "destination": "/api/proxy.js"
+            "source": "/repo/:path*",
+            "destination": "/api/github-proxy.js"
+        },
+        {
+            "source": "/git/:path*",
+            "destination": "/api/git-proxy.js"
+        },
+        {
+            "source": "/download/:path*",
+            "destination": "/api/github-proxy.js"
+        },
+        {
+            "source": "/avatar/:path*",
+            "destination": "/api/github-proxy.js"
+        },
+        {
+            "source": "/proxy",
+            "destination": "/api/github-proxy.js"
         }
     ],
     "headers": [
@@ -28,7 +49,7 @@
                 },
                 {
                     "key": "Access-Control-Allow-Methods",
-                    "value": "GET,OPTIONS"
+                    "value": "GET,POST,OPTIONS,HEAD"
                 },
                 {
                     "key": "Access-Control-Allow-Headers",
