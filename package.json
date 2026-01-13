@@ -6,6 +6,7 @@
         "node": ">=18.0.0"
     },
     "scripts": {
-        "start": "node --experimental-modules api/proxy-fetch.js"
-    }
+        "start": "node api/github-proxy.js"
+    },
+    "dependencies": {}
 }

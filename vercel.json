@@ -1,61 +1,37 @@
 {
     "functions": {
-        "api/github-proxy.js": {
-            "runtime": "nodejs20.x",
-            "maxDuration": 30
-        },
-        "api/git-proxy.js": {
-            "runtime": "nodejs20.x",
-            "maxDuration": 30
+        "api/**/*.js": {
+            "runtime": "nodejs20.x"
         }
     },
     "rewrites": [
         {
             "source": "/",
-            "destination": "/api/github-proxy.js"
+            "dest": "/index.html"
         },
         {
-            "source": "/raw/:path*",
-            "destination": "/api/github-proxy.js"
+            "source": "/raw/(.*)",
+            "dest": "/api/github-proxy?type=raw&path=$1"
         },
         {
-            "source": "/repo/:path*",
-            "destination": "/api/github-proxy.js"
+            "source": "/repo/(.*)",
+            "dest": "/api/github-proxy?type=repo&path=$1"
         },
         {
-            "source": "/git/:path*",
-            "destination": "/api/git-proxy.js"
+            "source": "/git/(.*)",
+            "dest": "/api/github-proxy?type=git&path=$1"
         },
         {
-            "source": "/download/:path*",
-            "destination": "/api/github-proxy.js"
+            "source": "/download/(.*)",
+            "dest": "/api/github-proxy?type=download&path=$1"
         },
         {
-            "source": "/avatar/:path*",
-            "destination": "/api/github-proxy.js"
+            "source": "/avatar/(.*)",
+            "dest": "/api/github-proxy?type=avatar&path=$1"
         },
         {
-            "source": "/proxy",
-            "destination": "/api/github-proxy.js"
-        }
-    ],
-    "headers": [
-        {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "*"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,POST,OPTIONS,HEAD"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "*"
-                }
-            ]
+            "source": "/api/proxy",
+            "dest": "/api/github-proxy"
         }
     ]
 }
